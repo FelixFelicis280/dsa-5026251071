@@ -1,24 +1,31 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main{
     public static void main(String[] args){
         Scanner sc = new Scanner(Main.class.getResourceAsStream("jobs.txt"));
 
-        sc.next();
-        MonoPrint p01 = new MonoPrint(sc.next(), sc.nextInt());
-        sc.next();
-        ColourPrint p02 = new ColourPrint(sc.next(), sc.nextInt());
-        sc.next();
-        ColourPrint p10 = new ColourPrint(sc.next(), sc.nextInt());
-        sc.next();
-        ColourPrint p11 = new ColourPrint(sc.next(), sc.nextInt());
-        sc.next();
-        MonoPrint p12 = new MonoPrint(sc.next(), sc.nextInt());
+        List<PrintJob> jobs = new ArrayList<>();
 
-        PrintJob[] jobs = {p01, p02, p10, p11, p12};
+        while(sc.hasNext()){
+            String type = sc.next();
+            String id = sc.next();
+            int pages = sc.nextInt();
 
-        for(int i=0; i < 5; i++){
-            System.out.println(jobs[i].summary());
+            PrintJob job;
+
+            if(type.equals("MONO")){
+                job = new MonoPrint(id, pages);
+            }else{
+                job = new ColourPrint(id, pages);
+            }
+
+            jobs.add(job);
+        }
+
+        for(PrintJob job:jobs){
+            System.out.println(job.summary());
         }
     }
 }
